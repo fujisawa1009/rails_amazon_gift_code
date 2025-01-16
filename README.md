@@ -15,10 +15,10 @@ rspec --init (以下ファイル生成)
   spec/rails_helper.rb
   spec/spec_helper.rb
 [実行時]
-docker compose exec web bashして rspec
+docker compose exec web bash して rspec
 
-# 
-docker compose exec web bashして
+# rubocpメモ
+docker compose exec web bash して
 rubocop -a
 
 # erb-lint ERBチェック
@@ -61,3 +61,44 @@ bin/rails db:migrate
    ・coderabbit 対応
    ・READMEに最小フォルダ構成追記
    ・ルーティング修正
+
+
+```
+app/
+  ├── controllers/
+  │   └── gift_codes_controller.rb # ギフトコード生成
+  ├── views/
+  │   └── gift_codes/
+  │       └── index.html.erb　# ギフトコード生成のメイン画面
+  └── services/
+      └── amazon_gift_code_service.rb # Amazonインセンティブ APIとの通信するサービスクラス
+lib/
+  └── amazon/
+      └── incentive_api/
+          └── agcod_service_ruby_client.rb # Amazonインセンティブ APIの公式サンプルコード
+
+```
+
+# amazon_api利用のために環境変数設定が必要
+$ EDITOR="code --wait" rails credentials:edit
+$ export EDITOR="code --wait"  # VS Codeの場合
+$ source ~/.bashrc  # または source ~/.zshrc
+
+# credentialsファイルを編集
+$ EDITOR="vi" rails credentials:edit
+--- vi がない場合は以下
+  apt-get update
+  apt-get install vim
+
+[設定内容]
+```
+amazon_incentive:
+  partner_id: "YOUR_PARTNER_ID"
+  aws_key_id: "YOUR_AWS_KEY_ID"
+  aws_secret_key: "YOUR_AWS_SECRET_KEY"
+  host: "agcod-v2-gamma.amazon.com"
+  region: "us-east-1"
+
+# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
+secret_key_base: [既存の値をそのまま残す]
+```

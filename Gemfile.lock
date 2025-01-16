@@ -173,6 +173,9 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    gyoku (1.4.0)
+      builder (>= 2.1.2)
+      rexml (~> 3.0)
     hashie (5.0.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -411,6 +414,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
+  gyoku
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

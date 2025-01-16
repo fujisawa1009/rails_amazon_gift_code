@@ -1,3 +1,17 @@
+# Amazonインセンティブ APIの公式サンプルコード
+# - AWS署名バージョン4の実装
+# - リクエストの署名と認証
+# - XMLおよびJSONペイロードの生成
+# - HTTPSリクエストの実行
+# - 以下のAPI操作をサポート:
+#   - CreateGiftCard: ギフトカード作成
+#   - CancelGiftCard: ギフトカードのキャンセル
+#   - ActivateGiftCard: ギフトカードの有効化
+#   - DeactivateGiftCard: ギフトカードの無効化
+#   - ActivationStatusCheck: 有効化状態の確認
+#   - GetGiftCardActivityPage: 活動履歴の取得[1]
+
+
 ######################################################################################################################
 # Copyright 2013 Amazon Technologies, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
