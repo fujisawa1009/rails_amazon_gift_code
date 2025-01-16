@@ -1,13 +1,26 @@
 
 # 初回DB作成
 $ docker-compose up
+
 $ docker-compose exec web bash
+
 $ bin/rails db:create
 
 # 起動メモ
 $ docker-compose run --rm web bundle
+
 $ docker-compose build
+
 $ docker compose up
+
+# http://localhost:3001/ root設定内容
+-- コンテナログ
+$ docker compose logs web
+
+-- Dockerfile等変更時
+docker compose down
+docker compose build
+docker compose up -d
 
 # rspecメモ
 rspec --init (以下ファイル生成)
@@ -19,6 +32,7 @@ docker compose exec web bash して rspec
 
 # rubocpメモ
 docker compose exec web bash して
+
 rubocop -a
 
 # erb-lint ERBチェック
@@ -55,14 +69,7 @@ bin/rails g scaffold question name:string title:string content:text
 
 bin/rails db:migrate
 
-# 20250116_ails_amazon_gift_code書き換え
- [amazon_main_file]
-   ・agcod_service_ruby_client.rb 追加
-   ・coderabbit 対応
-   ・READMEに最小フォルダ構成追記
-   ・ルーティング修正
-
-
+[最小構成]
 ```
 app/
   ├── controllers/
@@ -81,10 +88,13 @@ lib/
 
 # amazon_api利用のために環境変数設定が必要
 $ EDITOR="code --wait" rails credentials:edit
+
 $ export EDITOR="code --wait"  # VS Codeの場合
+
 $ source ~/.bashrc  # または source ~/.zshrc
 
 # credentialsファイルを編集
+
 $ EDITOR="vi" rails credentials:edit
 --- vi がない場合は以下
   apt-get update

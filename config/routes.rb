@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'gift_codes#index'
+  root 'gift_codes#index' # change root
   resources :gift_codes, only: [:index, :create]
 
   # root to: 'posts#index'
