@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>ユーザー一覧</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ユーザー名</th>
+        <th>メールアドレス</th>
+        <th>ギフトコード発行</th>
+        <th>発行履歴</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= form_with model: [:admin, user, GiftCode.new] do |f| %>
+              <%= f.number_field :amount %>
+              <%= f.select :currency_code, [['USD', 'USD'], ['JPY', 'JPY']] %>
+              <%= f.submit 'ギフトコード発行', class: 'btn btn-primary' %>
+            <% end %>
+          </td>
+          <td>
+            <% user.gift_codes.each do |code| %>
+              <div>
+                <%= code.amount %> <%= code.currency_code %>
+                (<%= code.status %>)
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

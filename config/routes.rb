@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  root 'gift_codes#index' # change root
+  # root 'gift_codes#index' # change root
   resources :gift_codes, only: [:index, :create]
+  
+  root 'admin/users#index'
+  
+  namespace :admin do
+    resources :users, only: [:index] do
+      resources :gift_codes, only: [:create]
+    end
+  end
 
   # root to: 'posts#index'
   get '/signup', to: 'users#new'
