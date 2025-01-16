@@ -76,6 +76,9 @@ gem 'config'
 # ワーカー
 gem 'sidekiq'
 
+#  amazon_gift
+gem 'gyoku'
+
 group :development, :test do
   gem 'annotate'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

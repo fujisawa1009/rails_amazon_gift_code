@@ -1,45 +1,30 @@
-初回のみ
 
-$ git init
-
-$ git add .
-
-$ git commit "initial commit"
-
-$ git remote add origin 上記手順で作成したGitHubリポジトリのURL
-
-$ git push origin main
-
-初回のみDB作成 $ docker-compose up
-
+# 初回DB作成
+$ docker-compose up
 $ docker-compose exec web bash
-
 $ bin/rails db:create
 
 # 起動メモ
-docker-compose run --rm web bundle
-
-docker-compose build
-
-docker compose up
+$ docker-compose run --rm web bundle
+$ docker-compose build
+$ docker compose up
 
 # rspecメモ
-rspec --initを実行すると自動的に以下ファイルが生成
-.rspec
-spec/rails_helper.rb
-spec/spec_helper.rb
-実行時は
-docker compose exec web bashしてから
+rspec --init (以下ファイル生成)
+  .rspec
+  spec/rails_helper.rb
+  spec/spec_helper.rb
+[実行時]
+docker compose exec web bash して rspec
 
-rspec
-
-# rubocopメモ
+# rubocpメモ
+docker compose exec web bash して
 rubocop -a
 
 # erb-lint ERBチェック
 bundle exec erblint . -a
 
-#改修メモ
+# 改修メモ
 Gem を追加したので bundle install を実行してください
 
 カラムを追加したので bin/rails db:migrate を実行してください
@@ -49,12 +34,12 @@ gemインストール
 
 docker-compose  run --rm web bundle
 
-■コントローラ作成
+# コントローラ作成
 docker compose exec web bash
 
 bin/rails g controller users index
 
-■モデル作成手順
+# モデル作成手順
 docker compose exec web bash
 
 bin/rails g model post
@@ -65,9 +50,55 @@ bin/rails db:migrate
 もしくは
 docker-compose run web bundle exec rake db:migrate
 
-■scaffoldingで一括作成時
+# scaffoldingで一括作成時
 bin/rails g scaffold question name:string title:string content:text 
 
 bin/rails db:migrate
 
+# 20250116_ails_amazon_gift_code書き換え
+ [amazon_main_file]
+   ・agcod_service_ruby_client.rb 追加
+   ・coderabbit 対応
+   ・READMEに最小フォルダ構成追記
+   ・ルーティング修正
 
+
+```
+app/
+  ├── controllers/
+  │   └── gift_codes_controller.rb # ギフトコード生成
+  ├── views/
+  │   └── gift_codes/
+  │       └── index.html.erb　# ギフトコード生成のメイン画面
+  └── services/
+      └── amazon_gift_code_service.rb # Amazonインセンティブ APIとの通信するサービスクラス
+lib/
+  └── amazon/
+      └── incentive_api/
+          └── agcod_service_ruby_client.rb # Amazonインセンティブ APIの公式サンプルコード
+
+```
+
+# amazon_api利用のために環境変数設定が必要
+$ EDITOR="code --wait" rails credentials:edit
+$ export EDITOR="code --wait"  # VS Codeの場合
+$ source ~/.bashrc  # または source ~/.zshrc
+
+# credentialsファイルを編集
+$ EDITOR="vi" rails credentials:edit
+--- vi がない場合は以下
+  apt-get update
+  apt-get install vim
+
+[設定内容]
+```
+amazon_incentive:
+  partner_id: "YOUR_PARTNER_ID"
+  aws_key_id: "YOUR_AWS_KEY_ID"
+  aws_secret_key: "YOUR_AWS_SECRET_KEY"
+  host: "agcod-v2-gamma.amazon.com"
+  region: "us-east-1"
+
+# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
+secret_key_base: [既存の値をそのまま残す]
+```
