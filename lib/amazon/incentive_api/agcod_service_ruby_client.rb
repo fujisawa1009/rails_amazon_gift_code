@@ -393,5 +393,3 @@ rescue StandardError => e
     puts "\nERROR RESPONSE:"
     puts e
 end
-
-#end
