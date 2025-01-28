@@ -15,6 +15,7 @@
       <%= render 'shared/flash_messages' %>
       <% if logged_in? && !current_page?(admin_login_path) %>
         <div class="nav nav-tabs mb-4">
+          <!-- メインメニュータブ -->
           <%= link_to 'ギフトコード一覧', admin_gift_codes_path, class: "nav-link #{current_page?(admin_gift_codes_path) ? 'active' : ''}", data: { turbo_frame: 'tab_content' } %>
           <%= link_to 'ユーザー管理', admin_users_path, class: "nav-link #{current_page?(admin_users_path) ? 'active' : ''}", data: { turbo_frame: 'tab_content' } %>
           <%= link_to '管理者設定', edit_admin_administrator_path(current_user), class: "nav-link #{current_page?(edit_admin_administrator_path(current_user)) ? 'active' : ''}", data: { turbo_frame: 'tab_content' } %>
