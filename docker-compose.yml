@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  # Railsアプリケーションを実行するメインのWebサービス
+  web:
+    build: .  # カレントディレクトリのDockerfileを使用
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"  # サーバー起動コマンド
+    volumes:
+      - .:/rails_amazon_gift_code:cached  # ソースコードのマウント
+      - bundle:/usr/local/bundle  # gemのキャッシュ
+    ports:
+      - 3001:3000  # ホストの3001番ポートをコンテナの3000番ポートにマッピング
+    depends_on:  # 依存関係の定義
+      - db
+      - chrome
+      - redis
+      - sidekiq
+    environment:  # 環境変数の設定
+      SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
+      REDIS_URL: redis://redis:6379
+    stdin_open: true  # コンテナの標準入力を開く
+    tty: true  # 疑似TTYを割り当て
+
+  # MySQLデータベースサービス
+  db:
+    image: mysql:5.7.33  # MySQLのバージョンを指定
+    environment:
+      MYSQL_ROOT_PASSWORD: "mysql"  # rootパスワードの設定
+    ports:
+      - 3307:3306  # ホストの3307番ポートをコンテナの3306番ポートにマッピング
+    volumes:
+      - mysql_data:/var/lib/mysql  # データの永続化
+
+  # Seleniumテスト用のChromeサービス
+  chrome:
+    image: selenium/standalone-chrome-debug:latest
+    ports:
+      - 4444:4444  # Seleniumのポート
+
+  # バックグラウンドジョブ処理用のSidekiqサービス
+  sidekiq:
+    build: .
+    environment:
+      REDIS_URL: redis://redis:6379  # RedisのURL設定
+    volumes:
+      - .:/rails_amazon_gift_code:cached  # ソースコードのマウント
+      - bundle:/usr/local/bundle  # gemのキャッシュ
+    depends_on:
+      - db
+      - redis
+    command: bundle exec sidekiq -C config/sidekiq.yml  # Sidekiq実行コマンド
+
+  # キャッシュストア用のRedisサービス
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379  # Redisのデフォルトポート
+    volumes:
+      - redis:/data  # Redisデータの永続化
+
+# データの永続化のためのボリューム定義
+volumes:
+  bundle:  # Bundlerのキャッシュ用
+  mysql_data:  # MySQLデータ用
+  redis:  # Redisデータ用

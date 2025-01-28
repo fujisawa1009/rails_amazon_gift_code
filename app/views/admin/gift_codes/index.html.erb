@@ -1,0 +1,42 @@
+
+<%= turbo_frame_tag 'tab_content' do %>
+  <div class="container mt-4">
+  <h1>ギフトコード一覧</h1>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ユーザー</th>
+          <th>金額</th>
+          <th>通貨</th>
+          <th>ステータス</th>
+          <th>作成日時</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @gift_codes.each do |gift_code| %>
+          <tr>
+            <td><%= gift_code.user.name %></td>
+            <td><%= gift_code.amount %></td>
+            <td><%= gift_code.currency_code %></td>
+            <td><%= gift_code.status %></td>
+            <td><%= l gift_code.created_at, format: :long %></td>
+            <td>
+              <div class="d-flex">
+                <%= button_to 'ギフトコード生成', admin_user_gift_codes_path(gift_code.user), 
+                            class: 'btn btn-primary btn-sm me-2',
+                            params: { gift_code: { amount: gift_code.amount, currency_code: gift_code.currency_code } } %>
+                <%= link_to '詳細', admin_gift_code_path(gift_code), class: 'btn btn-info btn-sm', data: { turbo_frame: 'tab_content' } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<% end %>

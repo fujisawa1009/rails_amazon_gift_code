@@ -1,0 +1,28 @@
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center mb-4">管理者ログイン</h2>
+          
+          <%= form_with url: admin_login_path, local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :email, 'メールアドレス', class: 'form-label' %>
+              <%= f.email_field :email, class: 'form-control' %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password, 'パスワード', class: 'form-label' %>
+              <%= f.password_field :password, class: 'form-control' %>
+            </div>
+
+            <div class="text-center">
+              <%= f.submit 'ログイン', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

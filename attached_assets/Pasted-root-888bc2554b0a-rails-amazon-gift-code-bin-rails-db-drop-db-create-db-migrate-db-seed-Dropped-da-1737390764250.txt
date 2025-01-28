@@ -1,0 +1,56 @@
+root@888bc2554b0a:/rails_amazon_gift_code# bin/rails db:drop db:create db:migrate db:seed
+Dropped database 'rails_amazon_gift_code_development'
+Dropped database 'rails_amazon_gift_code_test'
+Created database 'rails_amazon_gift_code_development'
+Created database 'rails_amazon_gift_code_test'
+== 20250121000001 CreateAdministrators: migrating =============================
+-- create_table(:administrators)
+   -> 0.0203s
+-- add_index(:administrators, :email, {:unique=>true})
+   -> 0.0148s
+-- add_index(:administrators, :reset_password_token, {:unique=>true})
+   -> 0.0125s
+== 20250121000001 CreateAdministrators: migrated (0.0478s) ====================
+
+== 20250121000002 CreateAdminSessions: migrating ==============================
+-- create_table(:admin_sessions)
+   -> 0.0209s
+-- add_index(:admin_sessions, :session_token, {:unique=>true})
+   -> 0.0107s
+== 20250121000002 CreateAdminSessions: migrated (0.0318s) =====================
+
+== 20250121000003 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0138s
+-- add_index(:users, :email, {:unique=>true})
+   -> 0.0121s
+== 20250121000003 CreateUsers: migrated (0.0261s) =============================
+
+== 20250121000004 CreateGiftCodes: migrating ==================================
+-- create_table(:gift_codes)
+   -> 0.0174s
+-- add_index(:gift_codes, :unique_url, {:unique=>true})
+   -> 0.0128s
+-- add_index(:gift_codes, :creation_request_id, {:unique=>true})
+   -> 0.0146s
+== 20250121000004 CreateGiftCodes: migrated (0.0452s) =========================
+
+== 20250121000005 AddPasswordDigestToAdministrators: migrating ================
+-- add_column(:administrators, :password_digest, :string)
+   -> 0.0239s
+== 20250121000005 AddPasswordDigestToAdministrators: migrated (0.0240s) =======
+
+== 20250121000006 AddCryptedPasswordAndSaltToUsers: migrating =================
+-- column_exists?(:users, :crypted_password)
+   -> 0.0024s
+-- add_column(:users, :crypted_password, :string)
+   -> 0.0210s
+-- column_exists?(:users, :salt)
+   -> 0.0027s
+== 20250121000006 AddCryptedPasswordAndSaltToUsers: migrated (0.0263s) ========
+
+rails aborted!
+ActiveRecord::RecordInvalid: バリデーションに失敗しました: Encrypted passwordを入力してください
+/rails_amazon_gift_code/db/seeds.rb:7:in `<main>'
+Tasks: TOP => db:seed
+(See full trace by running task with --trace)

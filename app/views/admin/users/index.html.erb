@@ -1,0 +1,33 @@
+
+<%= turbo_frame_tag 'tab_content' do %>
+  <div class="container">
+    <h1>ユーザー管理</h1>
+    
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>メールアドレス</th>
+            <th>ギフトコード数</th>
+            <th>作成日時</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.gift_codes.count %></td>
+              <td><%= l user.created_at, format: :long %></td>
+              <td>
+                <%= link_to 'ギフトコード作成', '#', class: 'btn btn-sm btn-primary' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
