@@ -1,5 +1,13 @@
 # Raplit利用残タスク(作業後にプロンプト履歴ファイルに移動する)
 git rebase -i HEAD~3
+
+[課題]ログイン時の表示画面を変更。またギフトコードはメニュータブとしては残すが順番は一番後ろへ移動。
+→rootの向き先を変更。何に変更するか？→bookを仮で作って向き先を変更する。
+→参考にするべきは、ユーザ管理のコントローラーとview画面。またその後にモデルを別appから拝借。
+作成済み
+app/controllers/admin/books_controller.rb
+app/views/admin/books
+
 [要修正]
 ・ログイン画面でタブが表示されている
 ・デグレ、、管理者設定画面で管理者一覧が表示されていない
@@ -75,25 +83,28 @@ gemインストール
 docker-compose  run --rm web bundle
 
 # コントローラ作成
+```
 docker compose exec web bash
-
-bin/rails g controller users index
+bin/rails g controller Admin::Books index
+```
 
 # モデル作成手順
+```
 docker compose exec web bash
-
 bin/rails g model post
 
-マイグレーションファイルを書き換える
+# マイグレーションファイルを書き換える
 bin/rails db:migrate
-
 もしくは
 docker-compose run web bundle exec rake db:migrate
+```
 
 # scaffoldingで一括作成時
+```
 bin/rails g scaffold question name:string title:string content:text 
 
 bin/rails db:migrate
+```
 
 [最小構成]
 ```
