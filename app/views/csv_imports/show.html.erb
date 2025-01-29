@@ -1,0 +1,14 @@
+<h1>インポート状況</h1>
+
+<div class="status">
+  <p>ステータス: <%= @csv_import.status %></p>
+  <p>作成日時: <%= @csv_import.created_at %></p>
+</div>
+
+<% if @csv_import.completed? %>
+  <p class="success">インポートが完了しました</p>
+<% elsif @csv_import.failed? %>
+  <p class="error">インポートに失敗しました</p>
+<% else %>
+  <p class="processing">処理中です...</p>
+<% end %>

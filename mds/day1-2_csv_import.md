@@ -58,13 +58,37 @@ app/
 
 ```
 
+```作成手順メモ
+bin/rails g model csv_import
+
+app/jobs/import_csv_job.rb
+
+bin/rails g controller csv_imports_controller
+
+app/views/csv_imports/new.html.erb
+
+app/views/csv_imports/show.html.erb
+
+resources :csv_imports, only: [:new, :create, :show]
+
+config/sidekiq.yml
+```
+
+# ユーザーデータのインポート例　
+app/jobs/import_csv_job.rb
+```
+def create_record_from_row(row)
+  User.create!(
+    name: row['name'],
+    email: row['email'],
+    age: row['age'],
+    address: row['address']
+  )
+rescue ActiveRecord::RecordInvalid => e
+  Rails.logger.error("Row import failed: #{row.to_h} - Error: #{e.message}")
+  raise e
+end
 
 ```
-```
 
-```
-```
-
-
-```
-```
+# 画面テスト手順
