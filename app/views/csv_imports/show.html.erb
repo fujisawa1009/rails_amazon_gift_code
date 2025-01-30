@@ -1,0 +1,21 @@
+<h1>インポート状況</h1>
+
+<div class="status">
+  <p>ステータス: <%= @csv_import.status %></p>
+  <p>作成日時: <%= @csv_import.created_at %></p>
+</div>
+
+<% if @csv_import.completed? %>
+  <p class="success">インポートが完了しました</p>
+  <%= link_to 'トップページに戻る', root_path %>
+<% elsif @csv_import.failed? %>
+  <p class="error">インポートに失敗しました</p>
+  <%= link_to '再試行', new_csv_import_path %>
+<% else %>
+  <p>処理中です...</p>
+  <script>
+    setTimeout(function() {
+      window.location.reload();
+    }, 3000);  // 3秒ごとに自動リロード
+  </script>
+<% end %>

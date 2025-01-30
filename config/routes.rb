@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'admin/sessions#new'
   post '/login', to: 'admin/sessions#create'
   delete '/logout', to: 'admin/sessions#destroy'
+  
+  resources :csv_imports, only: [:new, :create, :show]
 
   namespace :admin do
     # 調整中 ログイン後のダッシュボードルート（Turbo Frames用のメインレイアウト）
