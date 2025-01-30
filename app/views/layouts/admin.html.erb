@@ -21,6 +21,10 @@
           <%= link_to '管理者設定', edit_admin_administrator_path(current_user), class: "nav-link #{current_page?(edit_admin_administrator_path(current_user)) ? 'active' : ''}", data: { turbo_frame: 'tab_content' } %>
           <%= link_to 'ギフトコード一覧', admin_gift_codes_path, class: "nav-link #{current_page?(admin_gift_codes_path) ? 'active' : ''}", data: { turbo_frame: 'tab_content' } %>
           
+          <!-- add botton -->
+          <div class="actions">
+            <%= link_to 'CSVインポート', new_csv_import_path, class: 'button' %>
+          </div>
         </div>
       <% end %>
       

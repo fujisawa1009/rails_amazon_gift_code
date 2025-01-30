@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_29_142049) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_30_150904) do
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_29_142049) do
   end
 
   create_table "csv_imports", charset: "utf8mb4", force: :cascade do |t|
-    t.string "status", default: "pending", null: false
+    t.string "status", default: "0", null: false
     t.integer "imported_count", default: 0
     t.text "error_messages"
     t.datetime "created_at", null: false

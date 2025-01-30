@@ -5,10 +5,11 @@ class CsvImportsController < ApplicationController
   
     def create
       @csv_import = CsvImport.new(csv_import_params)
+      @csv_import.status = 0  # または 'pending' 状態で設定
       
       if @csv_import.save
         @csv_import.process_import
-        redirect_to @csv_import, notice: 'インポートを開始しました'
+        redirect_to root_path, notice: 'CSVインポートを開始しました'  # root_pathにリダイレクト
       else
         render :new
       end

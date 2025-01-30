@@ -1,5 +1,6 @@
 class ImportCsvJob < ApplicationJob
-    queue_as :default
+  require 'csv'  # この行を追加  
+  queue_as :default
     
     def perform(csv_import_id)
       csv_import = CsvImport.find(csv_import_id)
